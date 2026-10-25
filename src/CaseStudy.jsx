@@ -57,7 +57,7 @@ function Flip({ s, i }) {
           <span className="tag">{s.no} · {s.t}</span>
           <span className="hint">Flip ↻</span>
         </div>
-        <div className="face back">
+        <div className="face back" data-lenis-prevent>
           <small>{s.no} · {s.t}</small>
           <p>{s.why}</p>
           <small className="dn">Design note</small>

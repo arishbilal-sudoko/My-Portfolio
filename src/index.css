@@ -513,3 +513,74 @@ html.modal-open{overflow:hidden}
 .cs-hero .gw-filters{justify-content:flex-start;padding:clamp(18px,2.4vw,28px) 0 0}
 .cs-hero .gw-replay{margin-left:auto}
 @media (max-width:760px){.cs-hero .gw-replay{margin-left:0}}
+
+/* ===== Graphic Works: the grid runs edge to edge of the screen (no side margins, no rounded corners) ===== */
+.cover-frame.gw-bleed{width:100vw;margin-left:calc(50% - 50vw);border-radius:0}
+.cs-hero{overflow-x:clip}
+
+/* Responsive refinements: original desktop styling and artwork are preserved. */
+@media (max-width:1024px){
+  /* Grid children must be allowed to shrink below their content's intrinsic width. */
+  .two>*,.cs-row>*,.cs-body,.proto>*,.cs-meta>*,.works-list a>*{min-width:0}
+  .cs-row{grid-template-columns:minmax(170px,1fr) minmax(0,3fr)}
+  .hero .name{font-size:9vw;padding-inline:0}
+  .cs-body{overflow-wrap:anywhere}
+  .wgrid{grid-template-columns:repeat(auto-fill,minmax(min(190px,100%),1fr))}
+  .fgrid{grid-template-columns:repeat(auto-fill,minmax(min(230px,100%),1fr))}
+  .cs-stats{grid-template-columns:repeat(auto-fit,minmax(min(170px,100%),1fr))}
+  .cs-sw{grid-template-columns:repeat(auto-fit,minmax(min(120px,100%),1fr))}
+  .cs-meta{grid-template-columns:repeat(auto-fit,minmax(min(200px,100%),1fr))}
+  .contact .cols{grid-template-columns:repeat(auto-fit,minmax(min(260px,100%),1fr))}
+  /* Keep both faces of every card usable without cropping its design note. */
+  .back{overflow-y:auto;overscroll-behavior:contain}
+  .back>*{flex-shrink:0}
+  .proto{grid-template-columns:minmax(0,1fr);justify-items:center}
+  .phone{width:min(300px,100%)}
+  .proto-side{width:100%}
+}
+
+@media (max-width:760px){
+  .cs-row{grid-template-columns:minmax(0,1fr)}
+  .two,.hero-meta{grid-template-columns:minmax(0,1fr)}
+  .hero-bar{margin-inline:0;gap:16px}
+  .hero-bar .socials{gap:clamp(12px,3vw,22px);font-size:clamp(13px,3.5vw,16px)}
+  .hero-bar .mark{flex-shrink:0}
+  .works-list a{grid-template-columns:minmax(0,1fr) auto;gap:14px}
+  .works-list .t{overflow-wrap:anywhere}
+  .works-list a:hover,.works-list a:focus-visible{padding-left:8px}
+  .f-name{font-size:9.5vw}
+  .b-row>.flip{min-height:220px}
+  .front .tag,.front .hint{font-size:11px;padding:4px 8px}
+  .back{gap:10px}
+  .cs-pts li{grid-template-columns:28px minmax(0,1fr);gap:8px}
+  .cs-title{gap:8px 2vw}
+  .cs-sub{overflow-wrap:anywhere}
+  .cs-live{margin-left:0;margin-top:8px}
+  .gw-pill{min-height:40px}
+  /* Leave room for close / previous / next controls, even in landscape. */
+  .gw-lb{padding:72px 16px 80px}
+  .gw-lb figure{min-width:0;max-height:100%;overflow-y:auto;overscroll-behavior:contain}
+  .gw-lb img{max-height:calc(100svh - 250px);flex-shrink:0}
+  .gw-lb figcaption{overflow-wrap:anywhere}
+}
+
+@media (max-width:380px){
+  .hero-bar{align-items:flex-start}
+  .hero-bar .socials{column-gap:12px;row-gap:8px}
+  .hero-bar .mark{width:30px;height:30px}
+  .btns{gap:0 14px}
+  .btn{padding-inline:18px}
+}
+
+@media (max-height:500px) and (orientation:landscape){
+  .hero{min-height:100svh;padding-top:120px}
+  .gw-lb{padding:56px 76px 16px}
+  .gw-lb img{max-height:calc(100svh - 160px)}
+  .gw-lb-n{top:50%;bottom:auto;transform:translateY(-50%)}
+}
+
+@media (hover:none),(pointer:coarse){
+  .preview{display:none}
+  .works-list a.has-logo{cursor:pointer}
+  .works-list:hover a:not(:hover){opacity:1}
+}

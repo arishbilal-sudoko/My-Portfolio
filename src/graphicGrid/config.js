@@ -42,4 +42,21 @@ export const HOVER_ROW_RATE = 0       // speed of the hovered tile's row (0 = ha
 export const OTHER_ROWS_RATE = 0.3    // speed of every other row while a tile is hovered (1 = normal)
 export const HOVER_RELEASE_MS = 140   // grace period when the pointer crosses the gap between tiles
 export const BG = '#222222'           // page + side-fade colour
-export const FADE = { min: 80, vw: 0.15, max: 300 }   // left/right fade width: clamp(min, vw × width, max)
+export const FADE = { min: 0, vw: 0, max: 0 }          // left/right fade width: clamp(min, vw × width, max). 0 = no fade, the grid runs edge to edge
+export const MARGIN = 12                               // px of background above/below the grid during the opening; it closes to 0 as the grid expands, so the settled grid is edge to edge
+
+// ─── TILE SHAPES ─────────────────────────────────────────────────────────────────────────────
+// The default grid ("All") is the symmetric 4:3 wall measured from the reference. When one category is chosen the grid
+// is rebuilt in that category's shape. `aspect` is width / height (1200x1500 poster = 0.8). Tile area stays close to the
+// default so every grid has the same visual weight; tall shapes are capped so a row never outgrows the stage.
+const clamp = (v, a, b) => Math.min(b, Math.max(a, v))
+export const DEFAULT_ASPECT = 4 / 3
+export function layoutFor(aspect = DEFAULT_ASPECT) {
+  if (Math.abs(aspect - DEFAULT_ASPECT) < 1e-3) return { aspect: DEFAULT_ASPECT, rest: REF.tileRest, single: REF.tileSingle, intro: REF.introFrom }
+  const areaRest = REF.tileRest * REF.tileRest * 0.75, areaSingle = REF.tileSingle * REF.tileSingle * 0.75
+  const restH = clamp(Math.sqrt(areaRest / aspect), 215, 330)                                   // tile height in the grid
+  const single = Math.min(clamp(Math.sqrt(areaSingle / aspect), 200, 520) * aspect, 470)        // tile width in the opening frame
+  return { aspect, rest: restH * aspect, single, intro: (single * REF.introFrom) / REF.tileSingle }
+}
+export const CAT_START_T = 0.85   // a category grid replays only the scale-in (single frame → grid); this is where its clock starts
+

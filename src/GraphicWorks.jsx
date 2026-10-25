@@ -1,13 +1,13 @@
-import { useCallback, useLayoutEffect, useRef, useState } from 'react'
+import { useCallback, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import gsap from 'gsap'
 import { Reveal, TLink, useSite } from './site.jsx'
 import { Side } from './pages.jsx'
 import ScaleInGrid from './graphicGrid/ScaleInGrid.jsx'
 import Lightbox from './graphicGrid/Lightbox.jsx'
-import { projects, categories } from './portfolioData.js'
+import { projects as allProjects, categories, aspects } from './portfolioData.js'
 
 const reduce = typeof matchMedia !== 'undefined' && matchMedia('(prefers-reduced-motion: reduce)').matches
-const RADIUS = 10   // matches .cover-frame
+const RADIUS = 0    // the grid runs full-bleed (see .gw-bleed), so no rounded corners
 
 /* Case study: "Graphic Works". Same opening as the other projects: the live grid fills the screen and plays its
    scale-in; once the whole grid is built it recedes into the cover frame and the title pops up above it. */
@@ -23,8 +23,12 @@ export default function GraphicWorks() {
   const [cat, setCat] = useState('All')
   const [open, setOpen] = useState(null)
   const [replay, setReplay] = useState(0)
-  const active = (p) => cat === 'All' || p.category === cat
-  const nav = useCallback((d) => setOpen((i) => (i === null ? i : (i + d + projects.length) % projects.length)), [])
+  const [quick, setQuick] = useState(false)       // false = the full opening; true = only the scale-in (used after the first grid)
+  // The grid shows only the chosen category, in that category's tile shape. "All" is the symmetric 4:3 wall.
+  const projects = useMemo(() => (cat === 'All' ? allProjects : allProjects.filter((p) => p.category === cat)), [cat])
+  const aspect = cat === 'All' ? 4 / 3 : aspects[cat] || 4 / 3
+  const pick = (c) => { if (c === cat) return; setOpen(null); setQuick(true); setCat(c) }
+  const nav = useCallback((d) => setOpen((i) => (i === null ? i : (i + d + projects.length) % projects.length)), [projects.length])
 
   const play = useCallback(() => {
     if (started.current || !tl.current) return
@@ -86,20 +90,20 @@ export default function GraphicWorks() {
           </h1>
           <p className="cs-sub fx">Posters, thumbnails, social, branding &amp; more · selected work</p>
 
-          <div className="cover-frame gw-cover" ref={cover}>
+          <div className="cover-frame gw-cover gw-bleed" ref={cover}>
             <div className="gw-ov" ref={ov}>
-              <ScaleInGrid key={replay} projects={projects} active={active} onOpen={setOpen} onSettled={play} />
+              <ScaleInGrid key={`${cat}-${replay}`} projects={projects} aspect={aspect} mix={cat === 'All'} quick={quick} onOpen={setOpen} onSettled={play} />
             </div>
           </div>
 
           <div className="gw-filters fx" role="group" aria-label="Filter by category">
             {categories.map((c) => (
-              <button key={c} className={'gw-pill' + (cat === c ? ' on' : '')} aria-pressed={cat === c} onClick={() => setCat(c)}>{c}</button>
+              <button key={c} className={'gw-pill' + (cat === c ? ' on' : '')} aria-pressed={cat === c} onClick={() => pick(c)}>{c}</button>
             ))}
-            <button className="gw-pill gw-replay" onClick={() => setReplay((n) => n + 1)}>Replay ↻</button>
+            <button className="gw-pill gw-replay" onClick={() => { setOpen(null); setQuick(cat !== 'All'); setReplay((n) => n + 1) }}>Replay ↻</button>
           </div>
 
-          <p className="lead cs-intro fx">Everything I design away from screens and code, in one moving wall. Hover a tile to hold its row still, tap it to see it bigger.</p>
+          <p className="lead cs-intro fx">Everything I design away from screens and code, in one moving wall. Pick a category to see just that work in its own shape. Hover a tile to hold its row still, tap it to see it bigger.</p>
           <dl className="cs-meta fx">
             <div><dt>Type</dt><dd>Solo, client &amp; freelance work</dd></div>
             <div><dt>My role</dt><dd>Graphic designer</dd></div>
