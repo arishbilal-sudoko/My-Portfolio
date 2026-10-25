@@ -41,10 +41,25 @@ const Points = ({ items }) => (
 /* Final-design card: hover (or tap) flips it to show the thinking behind it */
 function Flip({ s, i }) {
   const [on, setOn] = useState(false)
+  const [visible, setVisible] = useState(reduce)
+  const card = useRef(null)
+
+  // React owns the reveal class as well as the flip state, so clicking cannot
+  // remove a class previously added by the scroll observer.
+  useEffect(() => {
+    if (reduce) return
+    const io = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) { setVisible(true); io.disconnect() }
+    }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' })
+    io.observe(card.current)
+    return () => io.disconnect()
+  }, [])
+
   const toggle = () => setOn((v) => !v)
   return (
     <div
-      className={`flip ${s.cls}${on ? ' on' : ''}`}
+      ref={card}
+      className={`flip ${s.cls}${visible ? ' in' : ''}${on ? ' on' : ''}`}
       style={{ aspectRatio: `${s.w}/${s.h}`, flex: `${s.w / s.h} 1 0%`, transitionDelay: `${(i % 2) * 120}ms` }}
       role="button" tabIndex={0} aria-pressed={on}
       aria-label={`${s.t}. Flip to read the design note.`}
@@ -135,7 +150,7 @@ function useCaseFx() {
     const io = new IntersectionObserver((es) => es.forEach((e) => {
       if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target) }
     }), { threshold: 0.12, rootMargin: '0px 0px -6% 0px' })
-    root.current.querySelectorAll('.rf, .flip, .rise').forEach((el) => io.observe(el))
+    root.current.querySelectorAll('.rf, .rise').forEach((el) => io.observe(el))
     const pars = [...root.current.querySelectorAll('.par')]
     let raf = 0
     const upd = () => {
