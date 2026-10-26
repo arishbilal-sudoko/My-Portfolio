@@ -230,7 +230,7 @@ function Marquee({ items, reverse, seconds }) {
             <div className="t-card">
               <div className="t-who">
                 {t.photo
-                  ? <img className="t-avatar" src={t.photo} alt="" width="44" height="44" decoding="async" />
+                  ? <img className={'t-avatar' + (t.logo ? ' t-avatar-logo' : '')} src={t.photo} alt="" width="44" height="44" decoding="async" />
                   : <span className="t-avatar" aria-hidden="true">{initials(t.name)}</span>}
                 <div><strong>{t.name}</strong><span>{t.role}</span></div>
               </div>

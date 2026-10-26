@@ -387,18 +387,19 @@ html.intro-lock{overflow:hidden}
 @keyframes t-right{from{transform:translate3d(-25%,0,0)}to{transform:translate3d(0,0,0)}}
 
 /* the item carries the spacing (as padding), so the gap between cards is still "on the card" for hover */
-.t-item{flex:none;width:314px;padding-right:14px;display:flex}
+.t-item{flex:none;width:380px;padding-right:14px;display:flex}
 .t-card{flex:1;padding:20px;background:#18181b;border:1px solid rgba(255,255,255,.08);border-radius:8px;display:flex;flex-direction:column;gap:14px;cursor:default;transition:border-color .3s}
 .t-item:hover .t-card{border-color:rgba(255,255,255,.3)}
 .t-who{display:flex;align-items:center;gap:12px}
 .t-avatar{flex:none;width:44px;height:44px;border-radius:50%;object-fit:cover;display:grid;place-items:center;background:linear-gradient(135deg,#e10600,#46105a);color:#fff;font-size:14px;font-weight:600;border:1px solid rgba(255,255,255,.18)}
+.t-avatar-logo{object-fit:contain;background:#fff;padding:3px}
 .t-who strong{display:block;font-weight:600;font-size:15px;line-height:1.2;color:#fff}
-.t-who span{display:block;font-size:13px;color:#8b8b8b;line-height:1.3;margin-top:2px}
+.t-who > div > span{display:block;font-size:13px;color:#8b8b8b;line-height:1.3;margin-top:2px}
 .t-card p{font-size:15px;line-height:1.5;color:#d4d4d8}
 
 @media (max-width:760px){
   .t-wall{gap:10px}
-  .t-item{width:260px;padding-right:10px}
+  .t-item{width:min(360px,92vw);padding-right:10px}
   .t-card{padding:16px}
   .t-avatar{width:38px;height:38px}
 }
