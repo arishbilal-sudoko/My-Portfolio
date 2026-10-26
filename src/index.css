@@ -585,3 +585,15 @@ html.modal-open{overflow:hidden}
   .works-list a.has-logo{cursor:pointer}
   .works-list:hover a:not(:hover){opacity:1}
 }
+
+/* SpendSmart case study and coin cursor */
+.preview.is-coin{width:112px}
+.preview.is-coin .pi{background:transparent!important;padding:0;box-shadow:none}
+.spend-study .spend-live i{background:#10b981}
+.spend-status{margin:12px 0 24px;color:var(--mute);font-size:14px}
+.spend-shot{margin:0;min-width:0}
+.spend-shot img{display:block;width:100%;height:auto;border:1px solid var(--line);border-radius:10px}
+.spend-shot figcaption{display:flex;flex-direction:column;gap:5px;margin-top:12px;font-size:14px;line-height:1.5;color:var(--mute)}
+.spend-shot figcaption b{color:var(--fg);font-weight:500}
+
+.spend-study .cover-frame{aspect-ratio:3/2}
