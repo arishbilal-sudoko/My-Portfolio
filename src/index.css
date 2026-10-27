@@ -387,19 +387,18 @@ html.intro-lock{overflow:hidden}
 @keyframes t-right{from{transform:translate3d(-25%,0,0)}to{transform:translate3d(0,0,0)}}
 
 /* the item carries the spacing (as padding), so the gap between cards is still "on the card" for hover */
-.t-item{flex:none;width:380px;padding-right:14px;display:flex}
+.t-item{flex:none;width:314px;padding-right:14px;display:flex}
 .t-card{flex:1;padding:20px;background:#18181b;border:1px solid rgba(255,255,255,.08);border-radius:8px;display:flex;flex-direction:column;gap:14px;cursor:default;transition:border-color .3s}
 .t-item:hover .t-card{border-color:rgba(255,255,255,.3)}
 .t-who{display:flex;align-items:center;gap:12px}
 .t-avatar{flex:none;width:44px;height:44px;border-radius:50%;object-fit:cover;display:grid;place-items:center;background:linear-gradient(135deg,#e10600,#46105a);color:#fff;font-size:14px;font-weight:600;border:1px solid rgba(255,255,255,.18)}
-.t-avatar-logo{object-fit:contain;background:#fff;padding:3px}
 .t-who strong{display:block;font-weight:600;font-size:15px;line-height:1.2;color:#fff}
-.t-who > div > span{display:block;font-size:13px;color:#8b8b8b;line-height:1.3;margin-top:2px}
+.t-who span{display:block;font-size:13px;color:#8b8b8b;line-height:1.3;margin-top:2px}
 .t-card p{font-size:15px;line-height:1.5;color:#d4d4d8}
 
 @media (max-width:760px){
   .t-wall{gap:10px}
-  .t-item{width:min(360px,92vw);padding-right:10px}
+  .t-item{width:260px;padding-right:10px}
   .t-card{padding:16px}
   .t-avatar{width:38px;height:38px}
 }
@@ -518,82 +517,3 @@ html.modal-open{overflow:hidden}
 /* ===== Graphic Works: the grid runs edge to edge of the screen (no side margins, no rounded corners) ===== */
 .cover-frame.gw-bleed{width:100vw;margin-left:calc(50% - 50vw);border-radius:0}
 .cs-hero{overflow-x:clip}
-
-/* Responsive refinements: original desktop styling and artwork are preserved. */
-@media (max-width:1024px){
-  /* Grid children must be allowed to shrink below their content's intrinsic width. */
-  .two>*,.cs-row>*,.cs-body,.proto>*,.cs-meta>*,.works-list a>*{min-width:0}
-  .cs-row{grid-template-columns:minmax(170px,1fr) minmax(0,3fr)}
-  .hero .name{font-size:9vw;padding-inline:0}
-  .cs-body{overflow-wrap:anywhere}
-  .wgrid{grid-template-columns:repeat(auto-fill,minmax(min(190px,100%),1fr))}
-  .fgrid{grid-template-columns:repeat(auto-fill,minmax(min(230px,100%),1fr))}
-  .cs-stats{grid-template-columns:repeat(auto-fit,minmax(min(170px,100%),1fr))}
-  .cs-sw{grid-template-columns:repeat(auto-fit,minmax(min(120px,100%),1fr))}
-  .cs-meta{grid-template-columns:repeat(auto-fit,minmax(min(200px,100%),1fr))}
-  .contact .cols{grid-template-columns:repeat(auto-fit,minmax(min(260px,100%),1fr))}
-  /* Keep both faces of every card usable without cropping its design note. */
-  .back{overflow-y:auto;overscroll-behavior:contain}
-  .back>*{flex-shrink:0}
-  .proto{grid-template-columns:minmax(0,1fr);justify-items:center}
-  .phone{width:min(300px,100%)}
-  .proto-side{width:100%}
-}
-
-@media (max-width:760px){
-  .cs-row{grid-template-columns:minmax(0,1fr)}
-  .two,.hero-meta{grid-template-columns:minmax(0,1fr)}
-  .hero-bar{margin-inline:0;gap:16px}
-  .hero-bar .socials{gap:clamp(12px,3vw,22px);font-size:clamp(13px,3.5vw,16px)}
-  .hero-bar .mark{flex-shrink:0}
-  .works-list a{grid-template-columns:minmax(0,1fr) auto;gap:14px}
-  .works-list .t{overflow-wrap:anywhere}
-  .works-list a:hover,.works-list a:focus-visible{padding-left:8px}
-  .f-name{font-size:9.5vw}
-  .b-row>.flip{min-height:220px}
-  .front .tag,.front .hint{font-size:11px;padding:4px 8px}
-  .back{gap:10px}
-  .cs-pts li{grid-template-columns:28px minmax(0,1fr);gap:8px}
-  .cs-title{gap:8px 2vw}
-  .cs-sub{overflow-wrap:anywhere}
-  .cs-live{margin-left:0;margin-top:8px}
-  .gw-pill{min-height:40px}
-  /* Leave room for close / previous / next controls, even in landscape. */
-  .gw-lb{padding:72px 16px 80px}
-  .gw-lb figure{min-width:0;max-height:100%;overflow-y:auto;overscroll-behavior:contain}
-  .gw-lb img{max-height:calc(100svh - 250px);flex-shrink:0}
-  .gw-lb figcaption{overflow-wrap:anywhere}
-}
-
-@media (max-width:380px){
-  .hero-bar{align-items:flex-start}
-  .hero-bar .socials{column-gap:12px;row-gap:8px}
-  .hero-bar .mark{width:30px;height:30px}
-  .btns{gap:0 14px}
-  .btn{padding-inline:18px}
-}
-
-@media (max-height:500px) and (orientation:landscape){
-  .hero{min-height:100svh;padding-top:120px}
-  .gw-lb{padding:56px 76px 16px}
-  .gw-lb img{max-height:calc(100svh - 160px)}
-  .gw-lb-n{top:50%;bottom:auto;transform:translateY(-50%)}
-}
-
-@media (hover:none),(pointer:coarse){
-  .preview{display:none}
-  .works-list a.has-logo{cursor:pointer}
-  .works-list:hover a:not(:hover){opacity:1}
-}
-
-/* SpendSmart case study and coin cursor */
-.preview.is-coin{width:112px}
-.preview.is-coin .pi{background:transparent!important;padding:0;box-shadow:none}
-.spend-study .spend-live i{background:#10b981}
-.spend-status{margin:12px 0 24px;color:var(--mute);font-size:14px}
-.spend-shot{margin:0;min-width:0}
-.spend-shot img{display:block;width:100%;height:auto;border:1px solid var(--line);border-radius:10px}
-.spend-shot figcaption{display:flex;flex-direction:column;gap:5px;margin-top:12px;font-size:14px;line-height:1.5;color:var(--mute)}
-.spend-shot figcaption b{color:var(--fg);font-weight:500}
-
-.spend-study .cover-frame{aspect-ratio:3/2}

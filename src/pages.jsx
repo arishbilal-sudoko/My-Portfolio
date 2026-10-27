@@ -46,7 +46,7 @@ function WorksList() {
           )
         })}
       </ul>
-      <div className={'preview' + (shown.logo ? ' is-logo' : '') + (shown.slug === 'spendsmart' ? ' is-coin' : '')} ref={box} aria-hidden="true">
+      <div className={'preview' + (shown.logo ? ' is-logo' : '')} ref={box} aria-hidden="true">
         {!shown.logo && <div className="pm"><span>{shown.year}</span><span>Preview</span></div>}
         <div className="pi" style={{ background: shown.color }}>
           {shown.logo ? <img src={shown.logo} alt="" /> : shown.img ? <img src={shown.img} alt="" /> : shown.title}
@@ -230,7 +230,7 @@ function Marquee({ items, reverse, seconds }) {
             <div className="t-card">
               <div className="t-who">
                 {t.photo
-                  ? <img className={'t-avatar' + (t.logo ? ' t-avatar-logo' : '')} src={t.photo} alt="" width="44" height="44" decoding="async" />
+                  ? <img className="t-avatar" src={t.photo} alt="" width="44" height="44" decoding="async" />
                   : <span className="t-avatar" aria-hidden="true">{initials(t.name)}</span>}
                 <div><strong>{t.name}</strong><span>{t.role}</span></div>
               </div>

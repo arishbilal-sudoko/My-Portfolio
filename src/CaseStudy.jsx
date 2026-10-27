@@ -41,25 +41,10 @@ const Points = ({ items }) => (
 /* Final-design card: hover (or tap) flips it to show the thinking behind it */
 function Flip({ s, i }) {
   const [on, setOn] = useState(false)
-  const [visible, setVisible] = useState(reduce)
-  const card = useRef(null)
-
-  // React owns the reveal class as well as the flip state, so clicking cannot
-  // remove a class previously added by the scroll observer.
-  useEffect(() => {
-    if (reduce) return
-    const io = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) { setVisible(true); io.disconnect() }
-    }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' })
-    io.observe(card.current)
-    return () => io.disconnect()
-  }, [])
-
   const toggle = () => setOn((v) => !v)
   return (
     <div
-      ref={card}
-      className={`flip ${s.cls}${visible ? ' in' : ''}${on ? ' on' : ''}`}
+      className={`flip ${s.cls}${on ? ' on' : ''}`}
       style={{ aspectRatio: `${s.w}/${s.h}`, flex: `${s.w / s.h} 1 0%`, transitionDelay: `${(i % 2) * 120}ms` }}
       role="button" tabIndex={0} aria-pressed={on}
       aria-label={`${s.t}. Flip to read the design note.`}
@@ -72,7 +57,7 @@ function Flip({ s, i }) {
           <span className="tag">{s.no} · {s.t}</span>
           <span className="hint">Flip ↻</span>
         </div>
-        <div className="face back" data-lenis-prevent>
+        <div className="face back">
           <small>{s.no} · {s.t}</small>
           <p>{s.why}</p>
           <small className="dn">Design note</small>
@@ -150,7 +135,7 @@ function useCaseFx() {
     const io = new IntersectionObserver((es) => es.forEach((e) => {
       if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target) }
     }), { threshold: 0.12, rootMargin: '0px 0px -6% 0px' })
-    root.current.querySelectorAll('.rf, .rise').forEach((el) => io.observe(el))
+    root.current.querySelectorAll('.rf, .flip, .rise').forEach((el) => io.observe(el))
     const pars = [...root.current.querySelectorAll('.par')]
     let raf = 0
     const upd = () => {
@@ -655,78 +640,8 @@ function Petify() {
   )
 }
 
-function SpendSmart() {
-  const { root, cover, ov } = useCaseFx()
-  const shots = [
-    { src: 'dashboard', title: 'The monthly picture', note: 'Budget, spending and money left in one glance. Sample student data shown.', alt: 'SpendSmart dashboard showing a student budget, income and remaining funds' },
-    { src: 'expenses', title: 'Capture the everyday spends', note: 'A title, amount, date and category keep each entry quick to record.', alt: 'Expense entry form and a list of sample college expenses' },
-    { src: 'summary', title: 'Look back before next month', note: 'Monthly totals and category breakdowns make spending patterns easier to spot.', alt: 'Monthly summary with sample income, spending, savings and category totals' },
-  ]
-  return (
-    <div ref={root} className="spend-study">
-      <Side />
-      <div className="cs-ov" ref={ov} aria-hidden="true"><img src="/spendsmart/mockup.webp" alt="" /></div>
-      <section className="cs-hero" data-label="Intro">
-        <div className="wrap">
-          <h1 className="cs-title" aria-label="SpendSmart">
-            <span className="nl" aria-hidden="true"><i>Spend</i></span>
-            <span className="nl serif" aria-hidden="true"><i>Smart.</i></span>
-          </h1>
-          <p className="cs-sub fx">Fintech frontend · student expense tracker <span className="cs-live spend-live"><i />Live</span></p>
-          <p className="spend-status fx">Frontend demo available · Backend integration in progress</p>
-          <div className="cover-frame" ref={cover}><img src="/spendsmart/mockup.webp" width="1536" height="1024" alt="SpendSmart expense tracker on a monitor with indigo studio lighting" /></div>
-          <p className="lead cs-intro fx">A little more clarity before the money runs out. I built SpendSmart to help students keep track of their funds through college life.</p>
-          <dl className="cs-meta fx">
-            <div><dt>Project</dt><dd>Personal · 2026</dd></div>
-            <div><dt>My role</dt><dd>UI design &amp; frontend development</dd></div>
-            <div><dt>Built with</dt><dd>HTML, CSS &amp; JavaScript</dd></div>
-            <div><dt>Current stage</dt><dd>Working frontend · backend in progress</dd></div>
-          </dl>
-          <a className="btn fx" href="/spendsmart/demo/index.html" target="_blank" rel="noopener noreferrer">Try frontend demo ↗</a>
-        </div>
-      </section>
-      <section className="cs"><div className="wrap">
-        <Row no="01" title="Why I built it" label="Idea">
-          <p>College spending is rarely one big purchase. It is food, transport, study materials and the smaller things that add up through the month. I wanted a simple place to see where that money was going.</p>
-          <p>The idea was to help a student manage an allowance, scholarship or part-time income, set a limit and understand what is still available to spend. This is a personal project built around that goal.</p>
-        </Row>
-        <Row no="02" title="The student flow" label="Flow">
-          <ol className="cs-steps"><li>Open the demo and sign in.</li><li>Set a monthly spending limit.</li><li>Log income and everyday expenses.</li><li>Check the remaining balance and budget alerts.</li><li>Review the month by category.</li></ol>
-        </Row>
-        <Row no="03" title="What works today" label="Features">
-          <Points items={[
-            ['A monthly limit to work with', 'Set or reset a budget, then see the remaining amount, progress bar and donut chart update as expenses are added.'],
-            ['Everyday expenses, organised', 'Record an amount, date and category. Recent entries appear first, and deletion asks for confirmation.'],
-            ['Income alongside spending', 'A separate income tab records incoming money. The current interface labels it “Salary”; it can also record allowances or part-time earnings.'],
-            ['A view beyond today', 'Browse monthly summaries, category totals, transactions and the difference between recorded income and expenses.'],
-            ['A nudge when needed', 'Overspending triggers a warning. A saving-tips panel offers short reminders without leaving the tracker.'],
-          ]} />
-        </Row>
-        <Row no="04" title="The interface" label="Screens">
-          <p>I used a dark navy base, indigo and violet for budget information, and green for the remaining balance. Large amounts give the key numbers priority over the supporting details.</p>
-          {shots.map(s => <figure className="spend-shot rise" key={s.src}>
-            <img src={`/spendsmart/${s.src}.webp`} alt={s.alt} loading="lazy" />
-            <figcaption><b>{s.title}</b><span>{s.note}</span></figcaption>
-          </figure>)}
-        </Row>
-        <Row no="05" title="Behind the frontend" label="Build">
-          <p>HTML structures the forms and dashboard. CSS handles the responsive layout, cards and visual states. Plain JavaScript manages events, calculations, validation and updates to the page.</p>
-          <p>Transactions are stored as JavaScript objects. Date filtering selects the month, totals are calculated from its entries, and an SVG donut chart reflects the budget used. The current version saves data in localStorage in the same browser.</p>
-          <p>The sign-in and registration flow is a browser-based demo. Server authentication, database storage and cross-device syncing are part of the backend work ahead.</p>
-        </Row>
-        <Row no="06" title="What comes next" label="Next">
-          <p>The frontend is available to try, and I am working on backend integration. My next step is to connect accounts and transactions to a server so a student can return to their records across devices.</p>
-          <p>I also want to refine the language around income for students and test whether the budget and summary screens are clear in everyday college use.</p>
-          <a className="btn" href="/spendsmart/demo/index.html" target="_blank" rel="noopener noreferrer">Explore the frontend ↗</a>
-        </Row>
-      </div></section>
-      <section className="cs-end"><div className="wrap"><TLink to="/#works" className="btn">← Back to works</TLink></div></section>
-    </div>
-  )
-}
-
-const studies = { 'joe-robbins-photography': JoeRobbins, 'arish-fitness': ArishFitness, 'petify': Petify, 'graphic-works': GraphicWorks, 'spendsmart': SpendSmart }
-const titles = { 'joe-robbins-photography': 'Joe Robbins Photography', 'arish-fitness': 'Arish Fitness', 'petify': 'Petify', 'graphic-works': 'Graphic Works', 'spendsmart': 'SpendSmart' }
+const studies = { 'joe-robbins-photography': JoeRobbins, 'arish-fitness': ArishFitness, 'petify': Petify, 'graphic-works': GraphicWorks }
+const titles = { 'joe-robbins-photography': 'Joe Robbins Photography', 'arish-fitness': 'Arish Fitness', 'petify': 'Petify', 'graphic-works': 'Graphic Works' }
 
 export default function CaseStudy() {
   const { slug } = useParams()
