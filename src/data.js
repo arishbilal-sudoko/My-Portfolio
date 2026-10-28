@@ -12,6 +12,7 @@ export const projects = [
   { slug: 'joe-robbins-photography', title: 'Joe Robbins Photography', type: 'Website redesign', year: '2026', color: '#8a0f1a', logo: '/joe-robbins-logo.png', img: '/joe/mockup.webp' }, // TODO: set the real year
   { slug: 'arish-fitness', title: 'Arish Fitness', type: 'Android app · In progress', year: '2026', color: '#1d2a0e', img: '/arish-fitness/mockup.webp' }, // TODO: confirm the year
   { slug: 'petify', title: 'Petify', type: 'Pet care app · UI/UX case study', year: '2026', color: '#5b0093', img: '/petify/mockup.webp' },
+  { slug: 'spendsmart', title: 'SpendSmart', type: 'Expense tracker · Web app', year: '2026', color: '#0f0f1a', logo: '/spendsmart/logo.png', img: '/spendsmart/mockup.webp' },
   { title: 'Project Five', type: 'Experiment', year: '2024', url: '#', color: '#1d3a5c', img: '' },
   { slug: 'graphic-works', title: 'Graphic Works', type: 'Posters, thumbnails & more', year: '2026', color: '#2a1f1f', img: '/images/portfolio/01-posters.webp' }, // TODO: confirm the year
 ]

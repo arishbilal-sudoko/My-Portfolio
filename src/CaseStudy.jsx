@@ -6,6 +6,7 @@ import { Side } from './pages.jsx'
 import { screens, groups } from './arishScreens.js'
 import GraphicWorks from './GraphicWorks.jsx'
 import { screens as pScreens, groups as pGroups } from './petifyScreens.js'
+import { screens as sScreens, groups as sGroups } from './spendsmartScreens.js'
 
 const reduce = typeof matchMedia !== 'undefined' && matchMedia('(prefers-reduced-motion: reduce)').matches
 const LIVE_URL = '' // TODO: paste the live site link here to show a "Visit live site" button
@@ -655,8 +656,129 @@ function Petify() {
   )
 }
 
-const studies = { 'joe-robbins-photography': JoeRobbins, 'arish-fitness': ArishFitness, 'petify': Petify, 'graphic-works': GraphicWorks }
-const titles = { 'joe-robbins-photography': 'Joe Robbins Photography', 'arish-fitness': 'Arish Fitness', 'petify': 'Petify', 'graphic-works': 'Graphic Works' }
+const palS = [['#0f0f1a', 'Midnight'], ['#1e1e35', 'Card navy'], ['#6366f1', 'Indigo'], ['#a855f7', 'Violet'], ['#10b981', 'Emerald'], ['#f43f5e', 'Rose']]
+const flowS = ['Sign in', 'Set a budget', 'Log income', 'Add expenses', 'Check the dashboard', 'Get alerted', 'Review the month']
+const statsS = [['3', 'Views: Expenses, Summary and Salary'], ['9', 'Spending categories, each with its own colour'], ['10', 'Money-saving tips, one tap away']]
+const roadS = [
+  ['done', 'Design & front end', 'Every screen designed and built in HTML, CSS and JavaScript, with accounts, budgets, income, expenses and monthly summaries all working.'],
+  ['now', 'Building the backend', 'Right now accounts and data live in the browser. I’m building the server side so they can live in a proper backend instead.'],
+  ['next', 'Connect the two', 'Swap the browser storage for the backend, so the app runs end to end.'],
+]
+
+function SpendSmart() {
+  const { root, cover, ov } = useCaseFx()
+  return (
+    <div ref={root}>
+      <Side />
+      <div className="cs-ov" ref={ov} aria-hidden="true"><img src="/spendsmart/mockup.webp" alt="" /></div>
+
+      <section className="cs-hero" data-label="Intro">
+        <div className="wrap">
+          <h1 className="cs-title" style={{ fontSize: 'clamp(36px,8vw,150px)' }} aria-label="SpendSmart">
+            <span className="nl" aria-hidden="true"><i>SpendSmart</i></span>
+            <span className="nl serif" aria-hidden="true"><i>Tracker</i></span>
+          </h1>
+          <p className="cs-sub fx">Expense tracker · Web app<span className="cs-live"><i />Backend in progress</span></p>
+          <div className="cover-frame" ref={cover}>
+            <img src="/spendsmart/mockup.webp" width="1536" height="864" alt="The SpendSmart dashboard on a monitor, showing monthly salary, budget and remaining balance cards above a budget breakdown ring" />
+          </div>
+          <p className="lead cs-intro fx">A finance tracker for students. Set a monthly budget, log what comes in and what goes out, and always know how much is left to spend. I built the front end in June, and I’ve been working on the backend ever since.</p>
+          <dl className="cs-meta fx">
+            <div><dt>Type</dt><dd>Personal project</dd></div>
+            <div><dt>My role</dt><dd>Designer &amp; developer</dd></div>
+            <div><dt>Platform</dt><dd>Web app · works on phones</dd></div>
+            <div><dt>Tools</dt><dd>HTML, CSS, JavaScript</dd></div>
+          </dl>
+          {LIVE_URL && <a className="btn fx" href={LIVE_URL} target="_blank" rel="noopener noreferrer">Visit live site ↗</a>}
+        </div>
+      </section>
+
+      <section className="cs">
+        <div className="wrap">
+          <Row no="01" title="Overview" label="Overview">
+            <p>SpendSmart helps students keep track of everyday money. You sign in, set a monthly budget, log your income and your expenses, and the dashboard shows how much you’ve spent, how much is left and where it all went.</p>
+            <p>It’s a development project first: designed, built and wired up by me, from the login screen to the monthly summary. The front end was finished in June, and I’m now building the backend behind it.</p>
+          </Row>
+
+          <Row no="02" title="What I wanted" label="Goals">
+            <Points items={[
+              ['One look tells you where you stand', 'Salary, budget and remaining balance sit side by side at the top, with a ring that fills as the month goes on.'],
+              ['A limit you actually feel', 'Go over budget and the app says so: a red card, a warning strip and a pop-up.'],
+              ['Logging that takes seconds', 'Title, amount, date, category. Four fields and one button, with Enter to add.'],
+              ['Money in, next to money out', 'Income gets its own tab, so savings are easy to see rather than guess.'],
+              ['Look back, don’t just look at today', 'A summary you can step back through month by month, with spending ranked by category.'],
+              ['Friendly, not preachy', 'Small money tips on request, and a confirmation before anything gets deleted.'],
+            ]} />
+          </Row>
+
+          <Row no="03" title="How it works" label="Flow">
+            <p>The loop a student goes through, from signing in to looking back at the month.</p>
+            <ol className="flow">
+              {flowS.map((f, i) => <li className="rise" key={f} style={{ transitionDelay: `${i * 50}ms` }}><span>{f}</span></li>)}
+            </ol>
+          </Row>
+
+          <Row no="04" title="How it’s built" label="Build">
+            <p>No frameworks, just HTML, CSS and JavaScript. Every number on screen is worked out from the entries you’ve logged, so there’s only one source of truth.</p>
+            <Points items={[
+              ['Accounts that keep things separate', 'Register and sign in, with checks for taken usernames, short passwords and passwords that don’t match. Each user gets their own data.'],
+              ['Everything is by month', 'Entries are filtered to the month you’re looking at, which powers the dashboard, the daily average and the Summary tab’s month-by-month view.'],
+              ['Live numbers, drawn by hand', 'The budget ring is an SVG drawn from the numbers: blue normally, amber at 80% and red once you’re over.'],
+              ['Alerts only when they matter', 'The over-budget pop-up fires once, at the moment spending crosses the limit, whether you add an expense or lower the budget.'],
+              ['Safe by default', 'Anything a user types is escaped before it’s shown, so a title can’t break the page.'],
+            ]} />
+          </Row>
+
+          <Row no="05" title="Look &amp; feel" label="Design system">
+            <p>A dark, midnight canvas with glowing indigo and violet for the main actions. Colour carries the meaning: green means money in or money left, red means a warning, and each of the nine spending categories has its own tint and emoji. The type is the system font, so it loads instantly and looks at home on every device.</p>
+            <div className="cs-sw">
+              {palS.map(([hex, name]) => (
+                <div key={hex}><span style={{ background: hex }} /><b>{name}</b><small>{hex}</small></div>
+              ))}
+            </div>
+            <p>Soft gradient cards, rounded corners and big, tappable buttons keep it easy to use one-handed, and the layout reflows to a single column on a phone.</p>
+          </Row>
+        </div>
+      </section>
+
+      <ScreenSection folder="spendsmart" list={sScreens} grps={sGroups} no="06" />
+
+      <section className="cs">
+        <div className="wrap">
+          <Row no="07" title="By the numbers" label="Outcome">
+            <p>A complete money tracker, from sign-in to monthly summary.</p>
+            <div className="cs-stats">
+              {statsS.map(([n, l], i) => (
+                <div className="rise" key={l} style={{ transitionDelay: `${i * 80}ms` }}><b>{n}</b><span>{l}</span></div>
+              ))}
+            </div>
+          </Row>
+
+          <Row no="08" title="Where it’s at" label="Status">
+            <p>The app works end to end in the browser. What’s left is the backend, which I’m building now.</p>
+            <ol className="cs-road">
+              {roadS.map(([st, t, d], i) => (
+                <li className="rise" key={t} style={{ transitionDelay: `${i * 70}ms` }}>
+                  <span className={`st ${st}`}>{stLabel[st]}</span>
+                  <div><b>{t}</b><span>{d}</span></div>
+                </li>
+              ))}
+            </ol>
+          </Row>
+        </div>
+      </section>
+
+      <section className="cs-end">
+        <div className="wrap">
+          <TLink to="/#works" className="btn">← Back to works</TLink>
+        </div>
+      </section>
+    </div>
+  )
+}
+
+const studies = { 'joe-robbins-photography': JoeRobbins, 'arish-fitness': ArishFitness, 'petify': Petify, 'spendsmart': SpendSmart, 'graphic-works': GraphicWorks }
+const titles = { 'joe-robbins-photography': 'Joe Robbins Photography', 'arish-fitness': 'Arish Fitness', 'petify': 'Petify', 'spendsmart': 'SpendSmart', 'graphic-works': 'Graphic Works' }
 
 export default function CaseStudy() {
   const { slug } = useParams()
