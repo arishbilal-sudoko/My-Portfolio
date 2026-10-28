@@ -387,18 +387,19 @@ html.intro-lock{overflow:hidden}
 @keyframes t-right{from{transform:translate3d(-25%,0,0)}to{transform:translate3d(0,0,0)}}
 
 /* the item carries the spacing (as padding), so the gap between cards is still "on the card" for hover */
-.t-item{flex:none;width:314px;padding-right:14px;display:flex}
+.t-item{flex:none;width:380px;padding-right:14px;display:flex}
 .t-card{flex:1;padding:20px;background:#18181b;border:1px solid rgba(255,255,255,.08);border-radius:8px;display:flex;flex-direction:column;gap:14px;cursor:default;transition:border-color .3s}
 .t-item:hover .t-card{border-color:rgba(255,255,255,.3)}
 .t-who{display:flex;align-items:center;gap:12px}
 .t-avatar{flex:none;width:44px;height:44px;border-radius:50%;object-fit:cover;display:grid;place-items:center;background:linear-gradient(135deg,#e10600,#46105a);color:#fff;font-size:14px;font-weight:600;border:1px solid rgba(255,255,255,.18)}
+.t-avatar-logo{object-fit:contain;background:#fff;padding:3px}
 .t-who strong{display:block;font-weight:600;font-size:15px;line-height:1.2;color:#fff}
-.t-who span{display:block;font-size:13px;color:#8b8b8b;line-height:1.3;margin-top:2px}
+.t-who > div > span{display:block;font-size:13px;color:#8b8b8b;line-height:1.3;margin-top:2px}
 .t-card p{font-size:15px;line-height:1.5;color:#d4d4d8}
 
 @media (max-width:760px){
   .t-wall{gap:10px}
-  .t-item{width:260px;padding-right:10px}
+  .t-item{width:min(360px,92vw);padding-right:10px}
   .t-card{padding:16px}
   .t-avatar{width:38px;height:38px}
 }
@@ -518,135 +519,69 @@ html.modal-open{overflow:hidden}
 .cover-frame.gw-bleed{width:100vw;margin-left:calc(50% - 50vw);border-radius:0}
 .cs-hero{overflow-x:clip}
 
-
-/* ===== Responsive layout pass: tablet, mobile and touch devices ===== */
-html, body, #root { width:100%; min-width:0; }
-body { overflow-x:clip; }
-main, article, section, .wrap { min-width:0; }
-section { scroll-margin-top:76px; }
-button, a { touch-action:manipulation; }
-img, video, canvas, svg { max-width:100%; }
-pre, code { overflow-wrap:anywhere; }
-
-@media (max-width: 1024px) {
-  :root { --pad: clamp(20px, 4vw, 36px); }
-  header { padding-top:16px; padding-bottom:16px; }
-  header nav { gap:18px; }
-  .two { grid-template-columns:minmax(0, 1.1fr) minmax(0, .9fr); gap:32px; }
-  .hero-meta { gap:24px; }
-  .works-list a { gap:16px; }
-  .proto { gap:28px; }
-  .cs-road li { grid-template-columns:90px minmax(0,1fr); }
+/* Responsive refinements: original desktop styling and artwork are preserved. */
+@media (max-width:1024px){
+  /* Grid children must be allowed to shrink below their content's intrinsic width. */
+  .two>*,.cs-row>*,.cs-body,.proto>*,.cs-meta>*,.works-list a>*{min-width:0}
+  .cs-row{grid-template-columns:minmax(170px,1fr) minmax(0,3fr)}
+  .hero .name{font-size:9vw;padding-inline:0}
+  .cs-body{overflow-wrap:anywhere}
+  .wgrid{grid-template-columns:repeat(auto-fill,minmax(min(190px,100%),1fr))}
+  .fgrid{grid-template-columns:repeat(auto-fill,minmax(min(230px,100%),1fr))}
+  .cs-stats{grid-template-columns:repeat(auto-fit,minmax(min(170px,100%),1fr))}
+  .cs-sw{grid-template-columns:repeat(auto-fit,minmax(min(120px,100%),1fr))}
+  .cs-meta{grid-template-columns:repeat(auto-fit,minmax(min(200px,100%),1fr))}
+  .contact .cols{grid-template-columns:repeat(auto-fit,minmax(min(260px,100%),1fr))}
+  /* Keep both faces of every card usable without cropping its design note. */
+  .back{overflow-y:auto;overscroll-behavior:contain}
+  .back>*{flex-shrink:0}
+  .proto{grid-template-columns:minmax(0,1fr);justify-items:center}
+  .phone{width:min(300px,100%)}
+  .proto-side{width:100%}
 }
 
-@media (max-width: 760px) {
-  :root { --pad: 20px; }
-  body { font-size:15px; }
-  section { padding:76px var(--pad); }
-  header {
-    padding:14px var(--pad);
-    gap:14px;
-    align-items:flex-start;
-    background:rgba(10,10,10,.78);
-    backdrop-filter:blur(12px);
-    mix-blend-mode:normal;
-    color:#fff;
-  }
-  header .logo { flex:none; font-size:14px; padding-top:2px; }
-  header nav {
-    min-width:0;
-    display:flex;
-    justify-content:flex-end;
-    flex-wrap:wrap;
-    gap:8px 14px;
-    font-size:12px;
-    line-height:1.4;
-  }
-  header nav a { white-space:nowrap; }
-  .hero { min-height:100svh; min-height:100dvh; padding-top:110px; padding-bottom:24px; }
-  .hero-tag { top:78px; max-width:24ch; font-size:12px; }
-  .name {
-    padding:0 var(--pad);
-    font-size:clamp(48px, 14vw, 100px);
-    line-height:.98;
-    overflow-wrap:anywhere;
-  }
-  .name .nl { max-width:100%; }
-  .hero-bar { margin:22px var(--pad) 0; gap:14px; flex-wrap:wrap; }
-  .hero-bar .rule { flex:1 1 100%; }
-  .hero-bar .mark { width:30px; height:30px; }
-  .hero-bar nav, .hero-bar .socials { gap:12px; font-size:12px; }
-  .hero-meta, .two { grid-template-columns:minmax(0,1fr); gap:28px; }
-  .hero-meta p { font-size:18px; }
-  .lead { font-size:clamp(24px,6vw,36px); }
-  .sub { margin-top:18px; }
-  .photo { max-width:520px; width:100%; }
-  .title { font-size:clamp(48px,13vw,88px); line-height:.94; overflow-wrap:anywhere; }
-  h2 { font-size:clamp(42px,11vw,72px); }
-  .works-list a {
-    grid-template-columns:minmax(0,1fr) auto;
-    gap:8px 12px;
-    padding:20px 0;
-    align-items:center;
-  }
-  .works-list .t { font-size:clamp(24px,7vw,42px); overflow-wrap:anywhere; }
-  .works-list .k { display:none; }
-  .works-list .y { font-size:12px; white-space:nowrap; }
-  .preview { display:none !important; }
-  .skills { grid-template-columns:repeat(2,minmax(0,1fr)); gap:24px 18px; }
-  .skills h3 { font-size:16px; }
-  .recs { grid-template-columns:minmax(0,1fr); }
-  .rec { padding:22px; }
-  .clients { grid-template-columns:repeat(2,minmax(0,1fr)); }
-  .clients li { min-width:0; padding:14px 8px; font-size:clamp(16px,4vw,22px); }
-  .contact .big { font-size:clamp(26px,7.5vw,54px); overflow-wrap:anywhere; margin-bottom:30px; }
-  .contact .cols { grid-template-columns:minmax(0,1fr); gap:22px; }
-  footer { min-height:70svh; min-height:70dvh; padding:24px var(--pad); gap:18px; }
-  .f-name { font-size:clamp(38px,12vw,88px) !important; overflow-wrap:anywhere; }
-  .f-hand { max-width:35vw; }
-  .side-l, .side-r, .bar { display:none !important; }
-  .t-head { padding:0 var(--pad); }
-  .testimonials h2 { font-size:clamp(42px,11vw,76px); }
-  .flow { gap:8px; }
-  .flow li { font-size:13px; }
-  .flow li span { padding:7px 10px; }
-  .wgrid, .fgrid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; }
-  .fgrid { grid-template-columns:minmax(0,1fr); }
-  .cs-road li { grid-template-columns:minmax(0,1fr); gap:8px; }
-  .grp-h { align-items:flex-start; flex-direction:column; gap:4px; }
-  .logo-card { padding:24px; }
-  .proto { grid-template-columns:minmax(0,1fr); justify-items:center; }
-  .phone { width:min(280px,78vw); }
-  .proto-side { width:100%; }
-  .gw-hero { min-height:100svh; min-height:100dvh; }
-  .gw-cap { max-width:calc(100% - 40px); font-size:12px; }
-  .gw-filters { justify-content:flex-start; gap:6px; padding-left:var(--pad); padding-right:var(--pad); }
-  .gw-pill { font-size:12px; padding:7px 11px; }
-  .gw-lb { padding:64px 14px 76px; }
-  .gw-lb img { max-height:calc(100dvh - 190px); }
-  .gw-lb-x { top:12px; right:12px; }
-  .gw-lb-n.prev { left:10px; }
-  .gw-lb-n.next { right:10px; }
-  .cs-live { margin:8px 0 0; }
+@media (max-width:760px){
+  .cs-row{grid-template-columns:minmax(0,1fr)}
+  .two,.hero-meta{grid-template-columns:minmax(0,1fr)}
+  .hero-bar{margin-inline:0;gap:16px}
+  .hero-bar .socials{gap:clamp(12px,3vw,22px);font-size:clamp(13px,3.5vw,16px)}
+  .hero-bar .mark{flex-shrink:0}
+  .works-list a{grid-template-columns:minmax(0,1fr) auto;gap:14px}
+  .works-list .t{overflow-wrap:anywhere}
+  .works-list a:hover,.works-list a:focus-visible{padding-left:8px}
+  .f-name{font-size:9.5vw}
+  .b-row>.flip{min-height:220px}
+  .front .tag,.front .hint{font-size:11px;padding:4px 8px}
+  .back{gap:10px}
+  .cs-pts li{grid-template-columns:28px minmax(0,1fr);gap:8px}
+  .cs-title{gap:8px 2vw}
+  .cs-sub{overflow-wrap:anywhere}
+  .cs-live{margin-left:0;margin-top:8px}
+  .gw-pill{min-height:40px}
+  /* Leave room for close / previous / next controls, even in landscape. */
+  .gw-lb{padding:72px 16px 80px}
+  .gw-lb figure{min-width:0;max-height:100%;overflow-y:auto;overscroll-behavior:contain}
+  .gw-lb img{max-height:calc(100svh - 250px);flex-shrink:0}
+  .gw-lb figcaption{overflow-wrap:anywhere}
 }
 
-@media (max-width: 420px) {
-  :root { --pad:16px; }
-  section { padding:64px var(--pad); }
-  header { padding:12px var(--pad); gap:10px; }
-  header .logo { font-size:12px; }
-  header nav { gap:7px 10px; font-size:11px; }
-  .name { font-size:clamp(42px,13.4vw,58px); }
-  .hero-tag { left:var(--pad); }
-  .hero-bar { margin-left:var(--pad); margin-right:var(--pad); }
-  .skills { grid-template-columns:minmax(0,1fr); }
-  .wgrid { grid-template-columns:minmax(0,1fr); }
-  .t-item { width:245px; }
-  .f-name { font-size:clamp(34px,11vw,48px) !important; }
-  .gw-replay { margin-left:0; }
+@media (max-width:380px){
+  .hero-bar{align-items:flex-start}
+  .hero-bar .socials{column-gap:12px;row-gap:8px}
+  .hero-bar .mark{width:30px;height:30px}
+  .btns{gap:0 14px}
+  .btn{padding-inline:18px}
 }
 
-/* Keep wide design elements contained without clipping interactive controls. */
-@supports (overflow: clip) {
-  body { overflow-x:clip; }
+@media (max-height:500px) and (orientation:landscape){
+  .hero{min-height:100svh;padding-top:120px}
+  .gw-lb{padding:56px 76px 16px}
+  .gw-lb img{max-height:calc(100svh - 160px)}
+  .gw-lb-n{top:50%;bottom:auto;transform:translateY(-50%)}
+}
+
+@media (hover:none),(pointer:coarse){
+  .preview{display:none}
+  .works-list a.has-logo{cursor:pointer}
+  .works-list:hover a:not(:hover){opacity:1}
 }

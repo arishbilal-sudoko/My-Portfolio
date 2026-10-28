@@ -25,7 +25,34 @@ export const skills = {
 
 // Testimonials and clients stay hidden on the site until you add real entries here.
 // Testimonial: { photo: '/people/jane.jpg' (square, 160×160, or '' for initials), name: 'Full Name', role: 'Role · Company', text: 'What they said.' }
-export const testimonials = []
+export const testimonials = [
+  {
+    "photo": "/images/recommendations/rachit-tripathi.webp",
+    "name": "Rachit Tripathi",
+    "role": "Team Lead · UI/UX Designer @SynthWeb",
+    "text": "I’ve appreciated the thought Arish puts into his UI/UX work, from wireframing in Figma to interactive prototyping. He considers how people move through a product and uses feedback well. He’s curious, easy to collaborate with, and willing to keep refining the details."
+  },
+  {
+    "photo": "/images/recommendations/manish-kumar.webp",
+    "name": "Manish Kumar",
+    "role": "SDE-2 @SynthWeb",
+    "text": "Working with Arish, I saw him grow more confident with each frontend task. He picked up HTML, CSS, and JavaScript quickly and brought care to building responsive pages. When something broke, he’d dig into it and come back with thoughtful questions."
+  },
+  {
+    "photo": "/images/recommendations/computer-clinic.webp",
+    "name": "Wasi Ahmed",
+    "role": "CEO · Computer Clinic",
+    "text": "I appreciated how Arish followed through on the details, from checking pages on mobile to handling basic backend work. His design background showed in the small interactions he refined. As a founder, I valued that he cared about how the finished product actually worked.",
+    "logo": true
+  },
+  {
+    "photo": "/images/recommendations/legacy-of-chikankari.webp",
+    "name": "Aliza Noman Salam",
+    "role": "CEO · Legacyofchikankari",
+    "text": "Arish took the time to understand what Legacyofchikankari meant to us, and that showed in his designs. I felt comfortable sharing ideas with him, even when I wasn’t sure how to explain what I wanted. He was patient, easy to work with, and someone I’d happily work with again.",
+    "logo": true
+  }
+]
 
 // Client / partner: { name: 'Name', type: 'What you did for them', year: '2026' }
 export const clients = []
