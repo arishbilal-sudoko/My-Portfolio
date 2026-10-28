@@ -327,7 +327,7 @@ export default function Page() {
             <p className="sub">I come from Assam, where there’s no shortage of tea, ideas, or reasons to take things a little slower. Somewhere along the way, I found myself designing interfaces, writing code, and turning “what if?” into things people can actually use.</p>
             <div className="btns">
               <TLink to="#contact" className="btn">Get in touch</TLink>
-              <a className="btn" href="/Arish_Ahmed_CV.pdf" download>Download CV</a>
+              <a className="btn" href="/Arish_Bilal_Ahmed_Graphic_Designer_CV.pdf" download>Download CV</a>
             </div>
           </div>
           <div className="photo blob"><img src="/me.jpg" alt={ME.name} onError={(e) => { e.currentTarget.style.display = 'none' }} /></div>
@@ -378,7 +378,7 @@ export default function Page() {
             <p className="serif-p">Open to internships and entry-level roles in UI/UX design and front-end development.</p>
             <p className="serif-p">Also happy to take on freelance design and front-end projects.</p>
           </div>
-          <a className="btn dl" href="/Arish_Ahmed_CV.pdf" download>Download CV</a>
+          <a className="btn dl" href="/Arish_Bilal_Ahmed_Graphic_Designer_CV.pdf" download>Download CV</a>
           <Socials />
         </div>
       </section>
