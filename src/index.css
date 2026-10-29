@@ -585,3 +585,19 @@ html.modal-open{overflow:hidden}
   .works-list a.has-logo{cursor:pointer}
   .works-list:hover a:not(:hover){opacity:1}
 }
+
+/* ===== SpendSmart: transparent logo cursor, wide screen cards, live demo ===== */
+.preview.is-logo.bare{width:150px}
+.preview.is-logo.bare .pi{background:none!important;box-shadow:none;padding:0;border-radius:0}
+.fgrid.wide{grid-template-columns:repeat(auto-fill,minmax(min(460px,100%),1fr))}
+.demo{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--card)}
+.demo-bar{display:flex;align-items:center;gap:14px;padding:10px 14px;border-bottom:1px solid var(--line);font-size:13px;color:var(--mute)}
+.demo-bar .dots{display:flex;gap:6px}
+.demo-bar .dots i{width:10px;height:10px;border-radius:50%;background:var(--line)}
+.demo-url{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.demo-open{color:var(--fg);text-decoration:none;white-space:nowrap}
+.demo-open:hover{text-decoration:underline}
+.demo-view{height:clamp(520px,78vh,720px);background:#0f0f1a}
+.demo-view iframe{display:block;width:100%;height:100%;border:0}
+.demo-foot{display:flex;flex-wrap:wrap;gap:12px 24px;align-items:center;justify-content:space-between;padding:14px 16px;border-top:1px solid var(--line);font-size:14px}
+.demo-foot p{color:var(--mute);line-height:1.45;max-width:60ch}

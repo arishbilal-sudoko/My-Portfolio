@@ -46,7 +46,7 @@ function WorksList() {
           )
         })}
       </ul>
-      <div className={'preview' + (shown.logo ? ' is-logo' : '')} ref={box} aria-hidden="true">
+      <div className={'preview' + (shown.logo ? ' is-logo' : '') + (shown.logoBare ? ' bare' : '')} ref={box} aria-hidden="true">
         {!shown.logo && <div className="pm"><span>{shown.year}</span><span>Preview</span></div>}
         <div className="pi" style={{ background: shown.color }}>
           {shown.logo ? <img src={shown.logo} alt="" /> : shown.img ? <img src={shown.img} alt="" /> : shown.title}

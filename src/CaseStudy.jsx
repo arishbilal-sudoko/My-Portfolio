@@ -470,7 +470,7 @@ function WireSection({ folder, list, grps, no, note }) {
 }
 
 /* Final screens as flip cards (front = the design, back = the thinking) */
-function ScreenSection({ folder, list, grps, no }) {
+function ScreenSection({ folder, list, grps, no, wide }) {
   const finals = list.map((s) => ({ cls: '', no: s.no, t: s.t, src: `/${folder}/ui/${s.f}.webp`, w: s.w, h: s.h, alt: `${s.t} screen`, why: s.why }))
   return (
     <section className="cs-final" data-label="Screens">
@@ -480,7 +480,7 @@ function ScreenSection({ folder, list, grps, no }) {
         {grps.map((g) => (
           <div className="grp" key={g.title}>
             <div className="grp-h"><b>{g.title}</b></div>
-            <div className="fgrid">
+            <div className={'fgrid' + (wide ? ' wide' : '')}>
               {finals.slice(g.start, g.end).map((f, i) => <Flip key={f.no} s={f} i={i} />)}
             </div>
           </div>
@@ -665,6 +665,31 @@ const roadS = [
   ['next', 'Connect the two', 'Swap the browser storage for the backend, so the app runs end to end.'],
 ]
 
+/* Live, working copy of the SpendSmart app. It saves to the visitor's own browser (localStorage) */
+function LiveDemo() {
+  const [key, setKey] = useState(0)
+  const reset = () => {
+    try { Object.keys(localStorage).filter((k) => k.startsWith('ss_')).forEach((k) => localStorage.removeItem(k)) } catch (e) { /* storage blocked */ }
+    setKey((k) => k + 1)
+  }
+  return (
+    <div className="demo rise">
+      <div className="demo-bar">
+        <span className="dots" aria-hidden="true"><i /><i /><i /></span>
+        <span className="demo-url">SpendSmart · live demo</span>
+        <a className="demo-open" href="/spendsmart/demo/index.html" target="_blank" rel="noopener noreferrer">Open in new tab ↗</a>
+      </div>
+      <div className="demo-view" data-lenis-prevent>
+        <iframe key={key} src="/spendsmart/demo/index.html" title="SpendSmart live demo" loading="lazy" />
+      </div>
+      <div className="demo-foot">
+        <p>Sign in with <b>admin / 1234</b> or register your own account. Everything you add is saved in your own browser (localStorage) and goes nowhere else.</p>
+        <div className="proto-btns"><button className="pbtn" onClick={reset}>Reset demo data</button></div>
+      </div>
+    </div>
+  )
+}
+
 function SpendSmart() {
   const { root, cover, ov } = useCaseFx()
   return (
@@ -741,11 +766,16 @@ function SpendSmart() {
         </div>
       </section>
 
-      <ScreenSection folder="spendsmart" list={sScreens} grps={sGroups} no="06" />
+      <ScreenSection folder="spendsmart" list={sScreens} grps={sGroups} no="06" wide />
 
       <section className="cs">
         <div className="wrap">
-          <Row no="07" title="By the numbers" label="Outcome">
+          <Row no="07" title="Try it yourself" label="Live demo">
+            <p>This is the real app, running right here. Set a budget, add a few expenses and watch the dashboard react, or push yourself over the limit to see the alerts.</p>
+            <LiveDemo />
+          </Row>
+
+          <Row no="08" title="By the numbers" label="Outcome">
             <p>A complete money tracker, from sign-in to monthly summary.</p>
             <div className="cs-stats">
               {statsS.map(([n, l], i) => (
@@ -754,7 +784,7 @@ function SpendSmart() {
             </div>
           </Row>
 
-          <Row no="08" title="Where it’s at" label="Status">
+          <Row no="09" title="Where it’s at" label="Status">
             <p>The app works end to end in the browser. What’s left is the backend, which I’m building now.</p>
             <ol className="cs-road">
               {roadS.map(([st, t, d], i) => (
